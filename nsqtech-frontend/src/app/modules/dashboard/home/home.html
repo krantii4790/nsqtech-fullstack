@@ -1,0 +1,41 @@
+<h2>Welcome {{ user?.userId }} ({{ user?.role }})</h2>
+
+<button (click)="logout()">Logout</button>
+
+<!-- Loading -->
+<div *ngIf="loading">
+  <p>Loading records... Please wait</p>
+</div>
+
+<!-- After Loading -->
+<div *ngIf="!loading">
+
+  <div *ngIf="records.length > 0; else noRecords">
+
+    <h3>Your Records</h3>
+
+    <table border="1" cellpadding="10">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Access</th>
+      </tr>
+
+      <tr *ngFor="let record of records">
+        <td>{{ record.id }}</td>
+        <td>{{ record.name }}</td>
+        <td>{{ record.access }}</td>
+      </tr>
+    </table>
+
+  </div>
+
+  <ng-template #noRecords>
+    <p>No records available</p>
+  </ng-template>
+
+</div>
+
+<button *ngIf="user?.role === 'Admin'" routerLink="/admin">
+  Manage Users
+</button>

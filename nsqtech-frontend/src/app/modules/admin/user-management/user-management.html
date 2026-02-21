@@ -1,0 +1,30 @@
+<h2>User Management</h2>
+
+<h3>Add User</h3>
+<input [(ngModel)]="newUser.userId" placeholder="User ID">
+<input [(ngModel)]="newUser.password" placeholder="Password">
+<select [(ngModel)]="newUser.role">
+  <option>General User</option>
+  <option>Admin</option>
+</select>
+<button (click)="addUser()">Add</button>
+
+<hr>
+
+<table border="1" cellpadding="10">
+  <tr>
+    <th>ID</th>
+    <th>User ID</th>
+    <th>Role</th>
+    <th>Action</th>
+  </tr>
+
+  <tr *ngFor="let user of users">
+    <td>{{ user.id }}</td>
+    <td>{{ user.userId }}</td>
+    <td>{{ user.role }}</td>
+    <td>
+      <button (click)="deleteUser(user.id)">Delete</button>
+    </td>
+  </tr>
+</table>

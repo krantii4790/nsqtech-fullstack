@@ -1,0 +1,42 @@
+<div style="width: 300px; margin: 100px auto; text-align: center;">
+
+  <h2>Login</h2>
+
+  <form (ngSubmit)="login()">
+
+    <div style="margin-bottom: 15px;">
+      <input 
+        type="text"
+        placeholder="User ID"
+        [(ngModel)]="userId"
+        name="userId"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <input 
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <button 
+      type="submit"
+      style="width: 100%; padding: 8px; cursor: pointer;"
+    >
+      Login
+    </button>
+
+  </form>
+
+  <div *ngIf="error" style="color: red; margin-top: 10px;">
+    {{ error }}
+  </div>
+
+</div>

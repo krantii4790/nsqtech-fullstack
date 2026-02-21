@@ -1,0 +1,5 @@
+[
+  { "id": 1, "name": "Document A", "access": "General User" },
+  { "id": 2, "name": "Document B", "access": "Admin" },
+  { "id": 3, "name": "Document C", "access": "General User" }
+]

@@ -1,26 +1,31 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './modules/auth/login/login';
-import { HomeComponent } from './modules/dashboard/home/home';
-import { UserManagementComponent } from './modules/admin/user-management/user-management';
-import { authGuard } from './guards/auth-guard';
-import { adminGuard } from './guards/admin-guard';
+import { AuthGuard } from './guards/auth-guard';
+import { AdminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
 
-  { path: '', component: LoginComponent },
-
-  { 
-    path: 'dashboard',
-    component: HomeComponent,
-    canActivate: [authGuard]
+  {
+    path: '',
+    loadComponent: () =>
+      import('./modules/auth/login/login')
+        .then(m => m.LoginComponent)
   },
 
-  { 
+  {
+    path: 'dashboard',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./modules/dashboard/home/home')
+        .then(m => m.HomeComponent)
+  },
+
+  {
     path: 'admin',
-    component: UserManagementComponent,
-    canActivate: [authGuard, adminGuard]
+    canActivate: [AdminGuard],
+    loadComponent: () =>
+      import('./guards/admin-guard')
+        .then(m => m.AdminGuard)
   },
 
   { path: '**', redirectTo: '' }
-
 ];

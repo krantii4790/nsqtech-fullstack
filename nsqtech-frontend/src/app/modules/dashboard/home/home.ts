@@ -7,8 +7,8 @@ import { UserService } from '../../../services/user';
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.html',
-  styleUrl: './home.css'
+  // templateUrl: './home.html'
+  templateUrl: './home.html'
 })
 export class HomeComponent implements OnInit {
 
@@ -22,33 +22,33 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user') || 'null');
 
-    if (!this.user) {
+    const storedUser = localStorage.getItem('user');
+
+    if (!storedUser) {
       this.router.navigate(['/']);
       return;
     }
 
-    this.userService.getRecords(3000).subscribe(res => {
+    this.user = JSON.parse(storedUser);
 
-  console.log("RESPONSE:", res);
+    this.userService.getRecords(2000).subscribe({
+      next: (res) => {
 
-  this.records = res.filter(r =>
-    r.access === this.user.role
-  );
+        this.records = res.filter(r =>
+          r.access === this.user.role
+        );
 
-  console.log("FILTERED:", this.records);
-
-  this.loading = false;
-
-}, error => {
-  console.error("API ERROR:", error);
-  this.loading = false;
-});
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.clear();
     this.router.navigate(['/']);
   }
 }

@@ -9,13 +9,14 @@ import { AuthService } from '../../../services/auth';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  styleUrls: ['./login.css'],
 })
 export class LoginComponent {
 
   userId: string = '';
   password: string = '';
   error: string = '';
+  
 
   constructor(
     private auth: AuthService,
@@ -23,16 +24,24 @@ export class LoginComponent {
   ) {}
 
   login() {
-  this.auth.login(this.userId, this.password)
-    .subscribe((res: any) => {
 
-      if (res.status === 'success') {
-        localStorage.setItem('user', JSON.stringify(res.user));
+    const credentials = {
+      userId: this.userId,
+      password: this.password
+    };
+
+    console.log(credentials);
+    this.auth.login(credentials).subscribe({
+      
+
+      next: () => {
         this.router.navigate(['/dashboard']);
+      },
+
+      error: () => {
+        this.error = 'Invalid Credentials';
       }
 
-    }, () => {
-      alert('Invalid Credentials');
     });
-}
+  }
 }
